@@ -1,0 +1,225 @@
+{
+  "presenceModes": {
+    "GHOST": {
+      "label": "Ghost",
+      "popupFrequency": "Only when invoked",
+      "suggestions": ["Manual command palette"],
+      "desktopPresence": "Dim orb, quiet notch, no proactive popups",
+      "agentVisibility": "Hidden unless running"
+    },
+    "ASSISTANT": {
+      "label": "Assistant",
+      "popupFrequency": "Low",
+      "suggestions": ["High confidence task suggestions", "Permission reminders"],
+      "desktopPresence": "Compact status surfaces",
+      "agentVisibility": "Visible after explicit start"
+    },
+    "COMPANION": {
+      "label": "Companion",
+      "popupFrequency": "Medium",
+      "suggestions": ["PDF summaries", "Inbox summaries", "Video summaries", "Draft replies"],
+      "desktopPresence": "Notch, orb, cursor cards, useful notifications",
+      "agentVisibility": "Background agents visible in activity"
+    },
+    "AGENTIC": {
+      "label": "Agentic",
+      "popupFrequency": "High inside approved scopes",
+      "suggestions": ["Create agents", "Continue workflows", "Approve next action", "Review memory writes"],
+      "desktopPresence": "Persistent operating layer",
+      "agentVisibility": "Full agent roster and live planning"
+    }
+  },
+  "permissionModes": {
+    "SAFE": {
+      "label": "Safe",
+      "description": "Ask before most actions and all sensitive actions."
+    },
+    "BALANCED": {
+      "label": "Balanced",
+      "description": "Allow low-risk actions and ask for important actions."
+    },
+    "AUTONOMOUS": {
+      "label": "Autonomous",
+      "description": "Allow work inside explicit user-approved scopes."
+    }
+  },
+  "tasks": [
+    {
+      "id": "open-spotify",
+      "title": "Open Spotify",
+      "target": "Spotify",
+      "description": "Launch Spotify and start focus playlist.",
+      "requiresPermission": false,
+      "reason": "Opening a local app is low risk in Balanced mode.",
+      "completion": "Spotify opened. Focus playlist queued."
+    },
+    {
+      "id": "open-youtube",
+      "title": "Open YouTube",
+      "target": "YouTube",
+      "description": "Open YouTube and prepare search for robotics lectures.",
+      "requiresPermission": false,
+      "reason": "Browser navigation only, no external post or message.",
+      "completion": "YouTube opened with robotics lecture search ready."
+    },
+    {
+      "id": "text-sudharshan",
+      "title": "Text Sudharshan",
+      "target": "Sudharshan",
+      "description": "Draft and send a WhatsApp message.",
+      "requiresPermission": true,
+      "permissionAction": "Send WhatsApp Message",
+      "reason": "Externally visible action",
+      "completion": "Message sent to Sudharshan: Running late by 10 minutes."
+    },
+    {
+      "id": "summarize-pdf",
+      "title": "Summarize PDF",
+      "target": "research-paper.pdf",
+      "description": "Create a local summary card for the visible PDF.",
+      "requiresPermission": true,
+      "permissionAction": "Read Visible PDF",
+      "reason": "Document content is being inspected in the prototype context.",
+      "completion": "PDF summarized into 5 bullets and saved to memory preview."
+    }
+  ],
+  "agents": [
+    {
+      "id": "filter-emails",
+      "name": "Email Filter Agent",
+      "goal": "Filter 500 unread emails and return the top 10.",
+      "scope": "Gmail inbox, unread email metadata, draft-only actions",
+      "memoryNamespace": "agents/email-filter",
+      "requiresPermissionAt": 54,
+      "permissionAction": "Archive low-priority email batch",
+      "target": "Gmail inbox",
+      "stages": ["Planning inbox filter", "Scanning fake sender metadata", "Ranking top 10 emails", "Waiting for archive approval", "Writing summary"]
+    },
+    {
+      "id": "monitor-ai-news",
+      "name": "AI News Monitor",
+      "goal": "Monitor AI news and alert when important releases appear.",
+      "scope": "Approved news sources only",
+      "memoryNamespace": "agents/ai-news-monitor",
+      "requiresPermissionAt": 0,
+      "permissionAction": "",
+      "target": "News watchlist",
+      "stages": ["Creating watchlist", "Checking fake source feed", "Deduplicating stories", "Preparing notification digest"]
+    },
+    {
+      "id": "robotics-jobs",
+      "name": "Robotics Jobs Researcher",
+      "goal": "Research robotics jobs and collect promising roles.",
+      "scope": "Job boards, company career pages, saved notes",
+      "memoryNamespace": "agents/robotics-jobs",
+      "requiresPermissionAt": 70,
+      "permissionAction": "Save job shortlist to memory",
+      "target": "Career workflow memory",
+      "stages": ["Mapping target companies", "Scanning fake listings", "Scoring roles", "Requesting memory write", "Preparing shortlist"]
+    },
+    {
+      "id": "internship-applier",
+      "name": "Internship Application Agent",
+      "goal": "Prepare internship applications for review.",
+      "scope": "Resume draft, cover letter drafts, approved applications",
+      "memoryNamespace": "agents/internship-applier",
+      "requiresPermissionAt": 45,
+      "permissionAction": "Submit Internship Application",
+      "target": "Aero Robotics Internship",
+      "stages": ["Building application plan", "Drafting cover letter", "Checking permission boundary", "Waiting for submit approval", "Logging application"]
+    },
+    {
+      "id": "build-website",
+      "name": "Website Builder Agent",
+      "goal": "Prototype a portfolio website locally.",
+      "scope": "Local prototype folder only",
+      "memoryNamespace": "agents/website-builder",
+      "requiresPermissionAt": 0,
+      "permissionAction": "",
+      "target": "Local project folder",
+      "stages": ["Sketching structure", "Creating fake sections", "Writing local files", "Preparing preview"]
+    }
+  ],
+  "cursorContexts": [
+    {
+      "id": "pdf",
+      "surface": "PDF",
+      "prompt": "Need summary?",
+      "detail": "Cove sees a simulated research PDF surface.",
+      "quickAction": "Summarize PDF"
+    },
+    {
+      "id": "gmail",
+      "surface": "Gmail",
+      "prompt": "Summarize inbox?",
+      "detail": "Cove sees a simulated Gmail inbox surface.",
+      "quickAction": "Filter 500 emails"
+    },
+    {
+      "id": "youtube",
+      "surface": "YouTube",
+      "prompt": "Summarize video?",
+      "detail": "Cove sees a simulated YouTube lecture surface.",
+      "quickAction": "Summarize video"
+    },
+    {
+      "id": "whatsapp",
+      "surface": "WhatsApp",
+      "prompt": "Draft reply?",
+      "detail": "Cove sees a simulated chat surface.",
+      "quickAction": "Text Sudharshan"
+    }
+  ],
+  "memory": {
+    "Preferences": ["Prefers concise summaries", "Default mode: Balanced", "Quiet hours after 11:00 PM"],
+    "Contacts": ["Sudharshan: close friend, WhatsApp", "Rahul: classmate", "Maya: robotics mentor"],
+    "Writing Style": ["Direct, warm, low flourish", "Uses short bullets for planning"],
+    "Voice Profile": ["Prototype placeholder only", "No biometric verification enabled"],
+    "Workflows": ["Research papers to summary cards", "Inbox triage to top 10", "Robotics jobs shortlist"],
+    "Agents": ["Email Filter Agent", "AI News Monitor", "Website Builder Agent"],
+    "History": ["Opened Spotify", "Created Email Agent", "Requested permission"],
+    "Trusted Devices": ["This MacBook simulation", "Bluetooth headset simulation"]
+  },
+  "activityLog": [
+    {
+      "time": "10:00 PM",
+      "title": "Opened Spotify",
+      "detail": "Task Mode simulated opening Spotify.",
+      "why": "User selected Open Spotify.",
+      "permission": "Balanced allowed local app opening.",
+      "memory": "No memory changed."
+    },
+    {
+      "time": "10:02 PM",
+      "title": "Created Email Agent",
+      "detail": "Agent Mode created Email Filter Agent.",
+      "why": "User selected Filter 500 emails.",
+      "permission": "Balanced allowed scoped planning.",
+      "memory": "Created namespace agents/email-filter."
+    },
+    {
+      "time": "10:04 PM",
+      "title": "Processed 500 Emails",
+      "detail": "Email agent simulated ranking unread email metadata.",
+      "why": "Agent scope includes inbox triage.",
+      "permission": "No external action taken.",
+      "memory": "Saved fake top sender categories."
+    },
+    {
+      "time": "10:06 PM",
+      "title": "Requested Permission",
+      "detail": "Cove requested approval before an externally visible action.",
+      "why": "Sending or archiving affects another surface.",
+      "permission": "Balanced requires user confirmation.",
+      "memory": "No memory changed until approved."
+    }
+  ],
+  "trustDashboard": {
+    "What Cove sees": ["Simulated active app surfaces", "Selected fake context cards", "No real screen content"],
+    "What Cove remembers": ["Preferences", "Contacts", "Workflows", "Agent namespaces"],
+    "What Cove controls": ["Only fake task and agent state", "No real apps", "No browser automation"],
+    "What Cove is doing now": ["Shown in notch, orb, activity log, and current task cards"],
+    "Why Cove did it": ["Every fake action records a reason in the activity log"],
+    "How to stop it": ["Kill switch", "Pause agent", "Deny permission", "Switch to Ghost mode"]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "cove-experience-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase 4 interactive Cove desktop experience prototype. Simulated only.",
+  "main": "dist-electron/app/electron-main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 0.0.0.0\" \"npm:electron:dev\"",
+    "electron:dev": "wait-on tcp:5173 && npm run electron:build && electron .",
+    "electron:build": "tsc -p tsconfig.electron.json",
+    "build": "tsc -b && npm run electron:build && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "electron": "^39.2.7",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "vite": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3",
+    "wait-on": "^9.0.3"
+  }
+}
