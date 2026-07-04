@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import { usePresence } from "../state/presenceStore";
 
 const suggestions = {
-  PDF: "Need summary?",
-  YouTube: "Summarize this lecture?",
-  Gmail: "Summarize inbox?",
-  VSCode: "Need help debugging?",
-  WhatsApp: "Draft reply?",
-  Trading: "Risk appears elevated.",
+  PDF: "Summarize PDF?",
+  YouTube: "Summarize lecture?",
+  Gmail: "Draft reply?",
+  VSCode: "Explain code?",
+  WhatsApp: "",
+  Trading: "Security warning?",
   Desktop: ""
 };
 
 export function CursorRuntime() {
   const { state, actions } = usePresence();
   const [visible, setVisible] = useState(false);
+  const [dismissedContext, setDismissedContext] = useState<string | null>(null);
 
   useEffect(() => {
+    setDismissedContext(null);
+
     if (state.currentApp === "Desktop") {
       setVisible(false);
       return;
@@ -35,6 +38,7 @@ export function CursorRuntime() {
     state.privacy.privateMode ||
     state.privacy.offForApp ||
     state.privacy.offForVideo ||
+    dismissedContext === state.currentApp ||
     state.currentApp === "Desktop";
 
   if (hidden) {
@@ -42,18 +46,23 @@ export function CursorRuntime() {
   }
 
   return (
-    <button className={`cursor-popup context-${state.currentApp.toLowerCase()}`} onClick={() => actions.runTask(cursorAction(state.currentApp))}>
+    <div className={`cursor-popup context-${state.currentApp.toLowerCase()}`}>
       <span className="cursor-dot" />
-      <strong>{suggestions[state.currentApp]}</strong>
-      <small>simulated suggestion</small>
-    </button>
+      <button className="cursor-suggestion" onClick={() => actions.runTask(cursorAction(state.currentApp))}>
+        <strong>{suggestions[state.currentApp]}</strong>
+        <small>context suggestion</small>
+      </button>
+      <button className="cursor-dismiss" onClick={() => setDismissedContext(state.currentApp)} aria-label="Dismiss suggestion">
+        x
+      </button>
+    </div>
   );
 }
 
 function cursorAction(app: string) {
   if (app === "PDF") return "Summarize PDF";
-  if (app === "Gmail") return "Filter 500 emails";
+  if (app === "YouTube") return "Summarize lecture";
+  if (app === "Gmail") return "Summarize inbox";
   if (app === "VSCode") return "Need help debugging";
-  if (app === "WhatsApp") return "Text Sudharshan";
   return "Summarize PDF";
 }

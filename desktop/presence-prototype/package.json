@@ -5,8 +5,9 @@
   "description": "Phase 4.1 desktop presence prototype for Cove. Simulated only.",
   "main": "dist-electron/electron/main.js",
   "scripts": {
-    "dev": "concurrently -k \"vite --host 0.0.0.0\" \"npm:electron:dev\"",
-    "electron:dev": "wait-on tcp:5174 && npm run electron:build && electron .",
+    "dev": "node scripts/dev.mjs",
+    "renderer:dev": "vite --host localhost --port 5174",
+    "electron:dev": "npm run electron:build && electron .",
     "electron:build": "tsc -p tsconfig.electron.json",
     "build": "tsc -b && npm run electron:build && vite build"
   },

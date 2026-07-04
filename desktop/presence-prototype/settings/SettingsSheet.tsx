@@ -1,7 +1,16 @@
-import { setupAccessOptions, PermissionMode, PresenceMode, usePresence } from "../state/presenceStore";
+import { ReactNode } from "react";
+import {
+  agentExamples,
+  AppContext,
+  setupAccessOptions,
+  PermissionMode,
+  PresenceMode,
+  usePresence
+} from "../state/presenceStore";
 
 const permissionModes: PermissionMode[] = ["Safe", "Balanced", "Autonomous"];
 const presenceModes: PresenceMode[] = ["Ghost", "Assistant", "Companion", "Agentic"];
+const contextSamples: AppContext[] = ["PDF", "YouTube", "Gmail", "VSCode"];
 
 export function SettingsSheet() {
   const { state, actions } = usePresence();
@@ -16,14 +25,18 @@ export function SettingsSheet() {
         <header>
           <div>
             <span>Settings</span>
-            <strong>Cove controls</strong>
+            <strong>Cove presence</strong>
           </div>
           <button onClick={actions.closeSettings}>Done</button>
         </header>
 
         <div className="settings-scroll">
-          <section className="settings-section">
-            <h3>Presence Mode</h3>
+          <Section title="Security">
+            <Toggle label="Private mode" checked={state.privacy.privateMode} onChange={() => actions.togglePrivacy("privateMode")} />
+            <Toggle label="Screen context" checked={state.privacy.screenObservation} onChange={() => actions.togglePrivacy("screenObservation")} />
+          </Section>
+
+          <Section title="Presence">
             <div className="segmented four">
               {presenceModes.map((mode) => (
                 <button
@@ -35,10 +48,9 @@ export function SettingsSheet() {
                 </button>
               ))}
             </div>
-          </section>
+          </Section>
 
-          <section className="settings-section">
-            <h3>Permission Mode</h3>
+          <Section title="Permissions">
             <div className="segmented three">
               {permissionModes.map((mode) => (
                 <button
@@ -50,61 +62,73 @@ export function SettingsSheet() {
                 </button>
               ))}
             </div>
-          </section>
+            <button className="surface-action" onClick={() => actions.runTask("Text Sudharshan")}>
+              Send message to Sudharshan?
+            </button>
+          </Section>
 
-          <section className="settings-section two-col">
+          <Section title="Voice">
             <Toggle label="Voice" checked={state.voiceEnabled} onChange={actions.toggleVoice} />
-            <Toggle label="Trusted audio device" checked={state.audioDeviceConnected} onChange={actions.toggleAudioDevice} />
-            <Toggle label="Agent Access" checked={state.agentAccess} onChange={actions.toggleAgentAccess} />
-            <Toggle label="Memory" checked={state.memoryEnabled} onChange={actions.toggleMemory} />
-            <Toggle label="Notifications" checked={state.notificationsEnabled} onChange={actions.toggleNotifications} />
-            <Toggle label="Kill Switch" checked={state.privacy.killSwitch} onChange={() => actions.togglePrivacy("killSwitch")} danger />
-          </section>
+            <Toggle label="Bluetooth headset or mic" checked={state.audioDeviceConnected} onChange={actions.toggleAudioDevice} />
+          </Section>
 
-          <section className="settings-section">
-            <h3>App Access</h3>
-            <div className="access-grid compact">
-              {setupAccessOptions.map((app) => (
+          <Section title="Apps">
+            <div className="access-grid">
+              {setupAccessOptions.slice(0, 8).map((app) => (
                 <label key={app} className="access-chip">
                   <input type="checkbox" checked={state.appAccess.includes(app)} onChange={() => actions.toggleAppAccess(app)} />
                   <span>{app}</span>
                 </label>
               ))}
             </div>
-          </section>
-
-          <section className="settings-section">
-            <h3>Security</h3>
-            <div className="trust-matrix">
-              <div>
-                <span>What Cove sees</span>
-                <strong>{state.privacy.screenObservation ? `Simulated ${state.currentApp}` : "Nothing"}</strong>
-              </div>
-              <div>
-                <span>What Cove remembers</span>
-                <strong>{state.memoryEnabled ? state.remembers.join(", ") : "Memory disabled"}</strong>
-              </div>
-              <div>
-                <span>What Cove controls</span>
-                <strong>{state.privacy.killSwitch ? "Nothing" : state.controls.join(", ")}</strong>
-              </div>
-              <div>
-                <span>Why Cove acted</span>
-                <strong>Based on explicit simulated command or selected desktop context.</strong>
-              </div>
-              <div>
-                <span>How to stop Cove</span>
-                <strong>Pause Cove, disable suggestions, private mode, or kill switch.</strong>
-              </div>
-              <div>
-                <span>Trusted Devices</span>
-                <strong>{state.trustedDevices.join(", ")}</strong>
-              </div>
+            <div className="compact-actions">
+              {contextSamples.map((context) => (
+                <button key={context} onClick={() => actions.setCurrentApp(context)}>
+                  {context === "YouTube" ? "Lecture" : context}
+                </button>
+              ))}
             </div>
-          </section>
+          </Section>
+
+          <Section title="Privacy">
+            <Toggle label="Suggestions" checked={state.privacy.suggestions} onChange={() => actions.togglePrivacy("suggestions")} />
+            <Toggle label="Pause presence" checked={state.privacy.paused} onChange={() => actions.togglePrivacy("paused")} />
+          </Section>
+
+          <Section title="Memory">
+            <Toggle label="Remember preferences" checked={state.memoryEnabled} onChange={actions.toggleMemory} />
+          </Section>
+
+          <Section title="Notifications">
+            <Toggle label="Top-right notifications" checked={state.notificationsEnabled} onChange={actions.toggleNotifications} />
+          </Section>
+
+          <Section title="Agents">
+            <Toggle label="Agent runtime" checked={state.agentAccess} onChange={actions.toggleAgentAccess} />
+            <div className="compact-actions">
+              {agentExamples.map((agent) => (
+                <button key={agent} onClick={() => actions.runAgent(agent)}>
+                  {agent.replace(" Agent", "")}
+                </button>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Kill Switch">
+            <Toggle label="Stop Cove immediately" checked={state.privacy.killSwitch} onChange={() => actions.togglePrivacy("killSwitch")} danger />
+          </Section>
         </div>
       </section>
     </div>
+  );
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="settings-section">
+      <h3>{title}</h3>
+      {children}
+    </section>
   );
 }
 

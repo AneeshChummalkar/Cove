@@ -55,10 +55,6 @@ export function WindowsOrb() {
           </div>
         </div>
       )}
-      <div className="system-tray">
-        <span>Cove tray</span>
-        <button onClick={actions.openSettings}>Settings</button>
-      </div>
     </div>
   );
 }

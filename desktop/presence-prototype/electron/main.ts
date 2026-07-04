@@ -1,57 +1,82 @@
-import { app, BrowserWindow, Menu, Tray, nativeImage, screen, shell } from "electron";
+import { app, BrowserWindow, Menu, Tray, nativeImage, shell } from "electron";
 import path from "node:path";
 
 let tray: Tray | null = null;
 let overlay: BrowserWindow | null = null;
 
-const loadRenderer = (win: BrowserWindow, route = "") => {
-  const devUrl = process.env.VITE_DEV_SERVER_URL || (!app.isPackaged ? "http://localhost:5174" : undefined);
+const rendererFile = () => path.join(app.getAppPath(), "dist", "index.html");
+
+const loadRenderer = async (win: BrowserWindow, route = "") => {
+  const devUrl = process.env.VITE_DEV_SERVER_URL;
+
   if (devUrl) {
-    win.loadURL(`${devUrl}${route}`);
-  } else {
-    win.loadFile(path.join(__dirname, "../../dist/index.html"), route ? { hash: route.replace("#", "") } : undefined);
+    const target = `${devUrl}${route}`;
+    console.log(`[Cove main] Loading renderer from Vite dev server: ${target}`);
+    await win.loadURL(target);
+    return;
   }
+
+  const filePath = rendererFile();
+  console.log(`[Cove main] Loading built renderer from file: ${filePath}`);
+  await win.loadFile(filePath, route ? { hash: route.replace("#", "") } : undefined);
 };
 
 const createOverlay = () => {
-  const display = screen.getPrimaryDisplay();
-  const { width, height } = display.workAreaSize;
+  console.log("[Cove main] Creating debug renderer window", {
+    platform: process.platform,
+    packaged: app.isPackaged,
+    devServer: process.env.VITE_DEV_SERVER_URL ?? null
+  });
 
   overlay = new BrowserWindow({
-    width,
-    height,
-    x: display.workArea.x,
-    y: display.workArea.y,
-    frame: false,
-    transparent: true,
-    resizable: false,
-    movable: false,
+    width: 1000,
+    height: 700,
+    frame: true,
+    transparent: false,
+    resizable: true,
+    movable: true,
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
-    alwaysOnTop: true,
-    skipTaskbar: true,
-    hasShadow: false,
-    title: "Cove Overlay Runtime",
-    backgroundColor: "#00000000",
-    vibrancy: process.platform === "darwin" ? "under-window" : undefined,
-    visualEffectState: process.platform === "darwin" ? "active" : undefined,
+    alwaysOnTop: false,
+    skipTaskbar: false,
+    hasShadow: true,
+    title: "Cove Renderer Debug",
+    backgroundColor: "#ffffff",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      sandbox: false
     }
   });
-
-  overlay.setAlwaysOnTop(true, "screen-saver");
-  overlay.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
   overlay.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
     return { action: "deny" };
   });
 
-  loadRenderer(overlay);
+  overlay.webContents.on("did-start-loading", () => {
+    console.log("[Cove main] Renderer started loading");
+  });
+
+  overlay.webContents.on("did-finish-load", () => {
+    console.log("[Cove main] Renderer finished loading", overlay?.webContents.getURL());
+  });
+
+  overlay.webContents.on("did-fail-load", (_event, errorCode, errorDescription, validatedURL) => {
+    console.error("[Cove main] Renderer failed to load", { errorCode, errorDescription, validatedURL });
+  });
+
+  overlay.webContents.on("render-process-gone", (_event, details) => {
+    console.error("[Cove main] Renderer process gone", details);
+  });
+
+  loadRenderer(overlay).catch((error) => {
+    console.error("[Cove main] Renderer load failed", error);
+  });
+
+  overlay.webContents.openDevTools({ mode: "detach" });
 
   overlay.on("closed", () => {
     overlay = null;
@@ -59,6 +84,9 @@ const createOverlay = () => {
 };
 
 app.whenReady().then(() => {
+  console.log("Electron started");
+  console.log("[Cove main] Electron app ready");
+
   tray = new Tray(nativeImage.createEmpty());
   tray.setToolTip("Cove simulated tray");
   tray.setContextMenu(

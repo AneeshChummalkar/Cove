@@ -76,6 +76,7 @@ type PresenceState = {
   commandText: string;
   activeAgent: string | null;
   agentStage: AgentStage | null;
+  agentProgress: number;
   activeTask: string | null;
   permissionRequest: PermissionRequest | null;
   toasts: Toast[];
@@ -98,6 +99,7 @@ type PresenceActions = {
   runTask: (task: string) => void;
   runAgent: (agent: string) => void;
   pauseAgent: () => void;
+  stopAgent: () => void;
   approvePermission: () => void;
   denyPermission: () => void;
   openSettings: () => void;
@@ -165,6 +167,7 @@ const initialState: PresenceState = {
   commandText: "",
   activeAgent: null,
   agentStage: null,
+  agentProgress: 0,
   activeTask: null,
   permissionRequest: null,
   toasts: [],
@@ -321,6 +324,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           activeTask: task,
           activeAgent: null,
           agentStage: null,
+          agentProgress: 0,
           message: `${task}...`
         }));
 
@@ -375,6 +379,21 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           return;
         }
 
+        if (task === "Summarize lecture") {
+          completeFastTask("Summarized lecture", "Generated simulated chapter notes for the lecture.");
+          return;
+        }
+
+        if (task === "Summarize inbox") {
+          completeFastTask("Summarized inbox", "Created a simulated priority email summary.");
+          return;
+        }
+
+        if (task === "Need help debugging") {
+          completeFastTask("Opened coding assistance", "Prepared simulated debugging context for VSCode.");
+          return;
+        }
+
         completeFastTask(`Opened ${app}`, `${app} launch simulated locally. No real app was opened.`);
       },
       runAgent: (agent) => {
@@ -389,6 +408,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           status: "agent",
           activeAgent: agent,
           agentStage: "planning",
+          agentProgress: 12,
           activeTask: null,
           message: `${agent} planning...`
         }));
@@ -404,6 +424,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
               status: "agent",
               activeAgent: agent,
               agentStage: "running",
+              agentProgress: 48,
               activeTask: null,
               message: `${agent} running...`
             };
@@ -420,6 +441,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
             status: "agent",
             activeAgent: agent,
             agentStage: "completed",
+            agentProgress: 100,
             message: `${agent} completed.`
             };
           });
@@ -437,6 +459,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
               status: "idle",
               activeAgent: null,
               agentStage: null,
+              agentProgress: 0,
               message: "Cove"
             };
           });
@@ -451,9 +474,22 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           return {
             ...current,
             agentStage: paused ? "running" : "paused",
+            agentProgress: paused ? Math.max(current.agentProgress, 52) : current.agentProgress,
             message: paused ? `${current.activeAgent} running...` : `${current.activeAgent} paused.`
           };
         });
+      },
+      stopAgent: () => {
+        setState((current) => ({
+          ...current,
+          status: "idle",
+          activeAgent: null,
+          agentStage: null,
+          agentProgress: 0,
+          message: "Cove"
+        }));
+        addActivity("Agent stopped", "Stopped the active simulated agent.");
+        addToast({ tone: "permission", title: "Agent stopped.", detail: "Cove paused the running automation." });
       },
       approvePermission: () => {
         const request = state.permissionRequest;
@@ -469,6 +505,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           permissionRequest: null,
           activeTask: null,
           agentStage: null,
+          agentProgress: 0,
           status: "idle",
           message: "Cove"
         }));
@@ -523,6 +560,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
             message: killSwitch ? "Cove stopped." : current.message,
             activeAgent: killSwitch ? null : current.activeAgent,
             agentStage: killSwitch ? null : current.agentStage,
+            agentProgress: killSwitch ? 0 : current.agentProgress,
             activeTask: killSwitch ? null : current.activeTask
           };
         }),
@@ -534,6 +572,7 @@ export function PresenceProvider({ children }: { children: ReactNode }) {
           settingsOpen: false,
           activeAgent: null,
           agentStage: null,
+          agentProgress: 0,
           activeTask: null,
           permissionRequest: null
         }))
