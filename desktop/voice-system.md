@@ -1,6 +1,15 @@
 # Voice System
 
-The voice system is the primary command interface for Cove.
+The voice system is an optional command interface for Cove. It is disabled by default and must be manually enabled.
+
+## Enablement
+
+Voice mode requires one of:
+
+- Bluetooth headset
+- Trusted microphone
+
+Voice output should support male voices, female voices, and future voice cloning with explicit consent.
 
 ## Pipeline
 
@@ -26,4 +35,3 @@ The voice system is the primary command interface for Cove.
 ## Failure Handling
 
 Cove should ask for clarification when speech confidence is low, when the target app or contact is ambiguous, or when the requested action is sensitive.
-

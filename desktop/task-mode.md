@@ -4,7 +4,10 @@ Task mode executes immediate, bounded commands.
 
 ## Examples
 
+- "Cove open Spotify"
+- "Cove text Sudharshan"
 - "Open YouTube"
+- "Cove summarize PDF"
 - "Text Rahul"
 - "Reply to email"
 
@@ -22,4 +25,3 @@ Task mode executes immediate, bounded commands.
 ## Constraints
 
 Task mode should avoid open-ended background behavior. If a request needs ongoing monitoring, scheduling, or repeated work, Cove should suggest agent mode.
-

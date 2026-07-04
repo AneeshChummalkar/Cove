@@ -4,6 +4,11 @@ Agent mode creates persistent agents that run over time.
 
 ## Examples
 
+- "Filter 500 unread emails and return top 10."
+- "Monitor AI news."
+- "Research robotics jobs."
+- "Build a website."
+- "Apply to internships."
 - "Track AI news"
 - "Manage Gmail"
 - "Review resumes"
@@ -36,4 +41,3 @@ An agent includes:
 ## Safety
 
 Persistent agents must always be visible in runtime status, interruptible by the user, and constrained by scoped permissions.
-

@@ -4,9 +4,9 @@ The permission system is the core trust layer for Cove.
 
 ## Modes
 
-- Ask every action
-- Ask important actions only
-- Fully autonomous
+- Safe: ask before most actions and all sensitive actions
+- Balanced: allow low-risk actions and ask for important actions
+- Autonomous: allow work inside explicit user-approved scopes
 
 ## Permission Broker
 
@@ -33,4 +33,3 @@ The broker receives a proposed action and returns one of:
 ## Important Actions
 
 Important actions include sending messages, deleting files, sharing private data, making purchases, changing security settings, installing software, granting access, and modifying persistent memory.
-

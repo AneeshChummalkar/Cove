@@ -17,6 +17,43 @@ The desktop runtime is the primary Cove product. It runs locally on Windows and 
 - Voice recognition module
 - Platform adapters for Windows and macOS
 
+## Phase 3 Module Structure
+
+The Phase 3 blueprint splits the desktop runtime into documented module folders. These folders are architecture placeholders only and should not contain production implementation during Phase 3.
+
+```text
+desktop/
+  runtime/
+  task-engine/
+  agent-engine/
+  memory/
+  voice/
+  permissions/
+  security/
+  overlays/
+  os/
+  notifications/
+  integrations/
+  ui/
+```
+
+Module entry points:
+
+- Runtime: `runtime/README.md`
+- Task engine: `task-engine/README.md`
+- Agent engine: `agent-engine/README.md`
+- Memory: `memory/README.md`
+- Voice: `voice/README.md`
+- Permissions: `permissions/README.md`
+- Security: `security/README.md`
+- Overlays: `overlays/README.md`
+- OS adapters: `os/README.md`
+- Notifications: `notifications/README.md`
+- Integrations: `integrations/README.md`
+- UI: `ui/README.md`
+
+Supporting Phase 3 docs live in `../docs`.
+
 ## Runtime Core
 
 The runtime core owns process lifecycle, local configuration, account state, device identity, model routing, event routing, and execution orchestration.
@@ -69,7 +106,7 @@ Overlay principles:
 
 ## Voice System
 
-The voice system converts speech into intent and manages conversational state for short interactions.
+The voice system converts speech into intent and manages conversational state for short interactions. Voice mode is disabled by default and must be manually enabled with a trusted microphone or Bluetooth headset.
 
 Pipeline:
 
@@ -110,9 +147,9 @@ Notification types:
 
 Cove supports three permission levels:
 
-- Ask every action
-- Ask important actions only
-- Fully autonomous
+- Safe: ask before most actions and all sensitive actions
+- Balanced: allow low-risk actions and ask for important actions
+- Autonomous: allow work inside explicit user-approved scopes
 
 The permission broker evaluates every proposed action before execution.
 
@@ -265,4 +302,3 @@ Requirements:
 - Confidence thresholds
 - Recovery path for false rejection
 - No irreversible action based only on voice confidence
-

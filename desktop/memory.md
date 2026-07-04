@@ -6,9 +6,14 @@ Cove memory is local-first, user-controlled, and scoped by purpose.
 
 - User preferences
 - Contact aliases
+- Writing style
+- Voice profile
 - App instructions
 - Workflow history
 - Agent state
+- Agent definitions
+- User history
+- Trusted devices
 - Trusted permissions
 - Security decisions
 - Rejected actions
@@ -29,4 +34,3 @@ Local storage should separate:
 - Credentials and tokens
 
 Sensitive values should use OS secure storage.
-
