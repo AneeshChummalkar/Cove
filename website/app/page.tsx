@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CoveSimulation } from "./components/CoveSimulation";
+import CoveSimulation from "./components/CoveSimulation";
 
 export default function Home() {
   return (

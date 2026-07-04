@@ -53,7 +53,7 @@ Task mode handles immediate, bounded commands.
 Examples:
 
 - "Open YouTube"
-- "Text Rahul"
+- "Text Sam"
 - "Reply to email"
 
 ### Agent Mode

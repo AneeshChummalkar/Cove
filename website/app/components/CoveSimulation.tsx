@@ -53,7 +53,7 @@ const interactions = [
 
 const particles = Array.from({ length: 42 }, (_, index) => index);
 
-export function CoveSimulation() {
+export default function CoveSimulation() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [typed, setTyped] = useState("");
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
