@@ -20,12 +20,12 @@ body {
 
 .overlay {
   width: 320px;
-  height: 60px;
+  height: 54px;
   display: grid;
   grid-template-columns: 48px 1fr 48px;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
+  border-radius: 22px;
   overflow: hidden;
   color: rgba(255, 255, 255, 0.94);
   background: rgba(18, 18, 20, 0.48);

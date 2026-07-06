@@ -1,21 +1,17 @@
 const { app, BrowserWindow, screen } = require('electron');
-const fs = require('fs');
 const path = require('path');
 
 const WIDTH = 320;
-const HEIGHT = 60;
+const HEIGHT = 54;
 
 function createOverlay() {
-  const display = screen.getPrimaryDisplay();
-  const { bounds, workArea } = display;
-  const x = Math.round(bounds.x + (bounds.width - WIDTH) / 2);
-  const y = Math.round(workArea.y + 8);
-  const target = path.resolve(__dirname, 'index.html');
+  console.log('RUNNING NOTCH OVERLAY CONFIG');
 
-  console.log('__dirname:', __dirname);
-  console.log('process.cwd():', process.cwd());
-  console.log('index.html exists:', fs.existsSync(target));
-  console.log('absolute index.html path:', target);
+  const display = screen.getPrimaryDisplay();
+  const { bounds } = display;
+  const x = Math.round(bounds.x + (bounds.width - WIDTH) / 2);
+  const y = 0;
+  const target = path.resolve(__dirname, 'index.html');
 
   const win = new BrowserWindow({
     width: WIDTH,
@@ -25,47 +21,31 @@ function createOverlay() {
     frame: false,
     transparent: true,
     titleBarStyle: 'hidden',
+    titleBarOverlay: false,
+    movable: false,
     resizable: false,
-    movable: true,
     minimizable: false,
     maximizable: false,
+    closable: false,
     fullscreenable: false,
+    focusable: false,
+    alwaysOnTop: true,
     skipTaskbar: true,
     hasShadow: false,
     backgroundColor: '#00000000',
-    vibrancy: 'under-window',
+    vibrancy: 'hud',
     visualEffectState: 'active'
   });
 
   win.setAlwaysOnTop(true, 'screen-saver');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  win.setIgnoreMouseEvents(true, { forward: true });
 
-  win.webContents.on('did-fail-load', (event, errorCode, errorDescription, validatedURL, isMainFrame) => {
-    console.log('did-fail-load:', {
-      errorCode,
-      errorDescription,
-      validatedURL,
-      isMainFrame
-    });
-  });
+  if (process.platform === 'darwin') {
+    win.setWindowButtonVisibility(false);
+  }
 
-  win.webContents.on('did-finish-load', () => {
-    console.log('did-finish-load:', win.webContents.getURL());
-  });
-
-  win.webContents.on('console-message', (event, level, message, line, sourceId) => {
-    console.log('renderer console-message:', {
-      level,
-      message,
-      line,
-      sourceId
-    });
-  });
-
-  console.log('loading:', target);
-  win.loadFile(target).catch((error) => {
-    console.log('loadFile error:', error);
-  });
+  win.loadFile(target);
 }
 
 app.whenReady().then(() => {
