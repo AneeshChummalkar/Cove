@@ -1,0 +1,13 @@
+{
+  "name": "cove-notch-overlay",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Small native Electron macOS notch overlay for Cove.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
+  }
+}

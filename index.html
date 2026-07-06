@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cove</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="overlay">
+      <button class="icon-button close" aria-label="Close">×</button>
+      <div class="brand" aria-label="Cove">
+        <span class="dot">●</span>
+        <span>Cove</span>
+      </div>
+      <button class="icon-button settings" aria-label="Settings">⌘</button>
+    </main>
+
+    <script>
+      const overlay = document.querySelector('.overlay');
+      const closeButton = document.querySelector('.close');
+      const settingsButton = document.querySelector('.settings');
+
+      closeButton.addEventListener('click', () => {
+        window.close();
+      });
+
+      settingsButton.addEventListener('click', () => {
+        overlay.classList.toggle('is-active');
+      });
+    </script>
+  </body>
+</html>
