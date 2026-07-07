@@ -15,7 +15,7 @@ private let springInterval: TimeInterval = 1.0 / 60.0
 private let springStiffness: CGFloat = 520
 private let springDamping: CGFloat = 46
 
-private enum OverlayState: String {
+fileprivate enum OverlayState: String {
   case compact
   case expanded
 }
@@ -251,7 +251,7 @@ final class CapsuleView: NSView {
     onSettingsPressed?(settingsButton)
   }
 
-  func setState(_ state: OverlayState, animated: Bool) {
+  fileprivate func setState(_ state: OverlayState, animated: Bool) {
     let isExpanded = state == .expanded
     let radius = (isExpanded ? expandedPanelHeight : compactPanelHeight) / 2
     let compactAlpha: CGFloat = isExpanded ? 0 : 1
