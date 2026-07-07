@@ -392,12 +392,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let frame = screen.frame
     let visibleFrame = screen.visibleFrame
     let safeTopInset = screen.safeAreaInsets.top
-    let leftAuxiliaryArea = screen.auxiliaryTopLeftArea
-    let rightAuxiliaryArea = screen.auxiliaryTopRightArea
 
     if
-      let leftAuxiliaryArea,
-      let rightAuxiliaryArea,
+      let leftAuxiliaryArea = screen.auxiliaryTopLeftArea,
+      let rightAuxiliaryArea = screen.auxiliaryTopRightArea,
       !leftAuxiliaryArea.isEmpty,
       !rightAuxiliaryArea.isEmpty,
       rightAuxiliaryArea.minX > leftAuxiliaryArea.maxX
@@ -436,8 +434,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       notchHeight: max(0, frame.maxY - topSafeBottomY),
       screenFrame: frame,
       visibleFrame: visibleFrame,
-      auxiliaryTopLeftArea: leftAuxiliaryArea ?? .zero,
-      auxiliaryTopRightArea: rightAuxiliaryArea ?? .zero,
+      auxiliaryTopLeftArea: screen.auxiliaryTopLeftArea ?? .zero,
+      auxiliaryTopRightArea: screen.auxiliaryTopRightArea ?? .zero,
       hasHardwareNotch: false
     )
   }
