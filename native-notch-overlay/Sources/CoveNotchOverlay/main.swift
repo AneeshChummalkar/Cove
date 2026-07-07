@@ -1,16 +1,35 @@
 import AppKit
 import QuartzCore
 
-private let panelWidth: CGFloat = 320
-private let panelHeight: CGFloat = 54
-private let topInset: CGFloat = 6
-private let inactiveAlpha: CGFloat = 0.72
-private let activeAlpha: CGFloat = 1.0
-private let settingsButtonSize: CGFloat = 28
+private let compactPanelHeight: CGFloat = 46
+private let expandedPanelWidth: CGFloat = 438
+private let expandedPanelHeight: CGFloat = 76
+private let minimumCompactPanelWidth: CGFloat = 188
+private let notchHorizontalPadding: CGFloat = 34
+private let notchAttachOverlap: CGFloat = 11
+private let hoverSlop: CGFloat = 18
+private let inactiveAlpha: CGFloat = 0.78
+private let activeAlpha: CGFloat = 0.96
+private let settingsButtonSize: CGFloat = 30
+private let springInterval: TimeInterval = 1.0 / 60.0
+private let springStiffness: CGFloat = 520
+private let springDamping: CGFloat = 46
+
+private enum OverlayState: String {
+  case compact
+  case expanded
+}
 
 final class NotchPanel: NSPanel {
   override var canBecomeKey: Bool { false }
   override var canBecomeMain: Bool { false }
+  override var acceptsFirstResponder: Bool { false }
+
+  override func performDrag(with event: NSEvent) {}
+
+  override func mouseDown(with event: NSEvent) {
+    super.mouseDown(with: event)
+  }
 }
 
 private struct NotchMetrics {
@@ -18,10 +37,101 @@ private struct NotchMetrics {
   let safeTopInset: CGFloat
   let topSafeBottomY: CGFloat
   let notchWidth: CGFloat
+  let notchHeight: CGFloat
+  let screenFrame: NSRect
+  let visibleFrame: NSRect
+  let auxiliaryTopLeftArea: NSRect
+  let auxiliaryTopRightArea: NSRect
+  let hasHardwareNotch: Bool
+}
+
+private struct SpringFrame {
+  var x: CGFloat
+  var y: CGFloat
+  var width: CGFloat
+  var height: CGFloat
+
+  init(_ rect: NSRect) {
+    x = rect.origin.x
+    y = rect.origin.y
+    width = rect.width
+    height = rect.height
+  }
+
+  var rect: NSRect {
+    NSRect(x: x, y: y, width: width, height: height)
+  }
+}
+
+final class SettingsViewController: NSViewController {
+  override func loadView() {
+    let rootView = NSVisualEffectView()
+    rootView.material = .popover
+    rootView.blendingMode = .behindWindow
+    rootView.state = .active
+    rootView.translatesAutoresizingMaskIntoConstraints = false
+
+    let stackView = NSStackView()
+    stackView.orientation = .vertical
+    stackView.alignment = .leading
+    stackView.spacing = 10
+    stackView.edgeInsets = NSEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+
+    let title = NSTextField(labelWithString: "Cove Settings")
+    title.font = .systemFont(ofSize: 15, weight: .semibold)
+    title.textColor = .labelColor
+
+    let description = NSTextField(
+      wrappingLabelWithString: "Notch overlay prototype controls."
+    )
+    description.font = .systemFont(ofSize: 12)
+    description.textColor = .secondaryLabelColor
+    description.maximumNumberOfLines = 2
+
+    let launchAtLogin = NSButton(checkboxWithTitle: "Launch at login", target: nil, action: nil)
+    launchAtLogin.state = .off
+
+    let keepOnAllSpaces = NSButton(
+      checkboxWithTitle: "Show on all Spaces and fullscreen apps",
+      target: nil,
+      action: nil
+    )
+    keepOnAllSpaces.state = .on
+    keepOnAllSpaces.isEnabled = false
+
+    let passthrough = NSTextField(labelWithString: "Mouse passthrough remains enabled outside controls.")
+    passthrough.font = .systemFont(ofSize: 11)
+    passthrough.textColor = .tertiaryLabelColor
+
+    [title, description, launchAtLogin, keepOnAllSpaces, passthrough].forEach {
+      stackView.addArrangedSubview($0)
+    }
+
+    rootView.addSubview(stackView)
+    NSLayoutConstraint.activate([
+      stackView.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+      stackView.trailingAnchor.constraint(equalTo: rootView.trailingAnchor),
+      stackView.topAnchor.constraint(equalTo: rootView.topAnchor),
+      stackView.bottomAnchor.constraint(equalTo: rootView.bottomAnchor),
+      rootView.widthAnchor.constraint(equalToConstant: 292)
+    ])
+
+    view = rootView
+    preferredContentSize = NSSize(width: 292, height: 156)
+  }
 }
 
 final class CapsuleView: NSView {
   let settingsButton = NSButton()
+  var onSettingsPressed: ((NSButton) -> Void)?
+
+  private let visualEffectView = NSVisualEffectView()
+  private let tintView = NSView()
+  private let compactTitle = NSTextField(labelWithString: "● Cove")
+  private let expandedTitle = NSTextField(labelWithString: "Cove")
+  private let expandedSubtitle = NSTextField(labelWithString: "Ready near the notch")
+  private let statusPill = NSTextField(labelWithString: "idle")
 
   override init(frame frameRect: NSRect) {
     super.init(frame: frameRect)
@@ -35,18 +145,51 @@ final class CapsuleView: NSView {
 
   private func buildView() {
     wantsLayer = true
-    layer?.cornerRadius = 22
+    layer?.cornerRadius = compactPanelHeight / 2
     layer?.cornerCurve = .continuous
-    layer?.backgroundColor = NSColor.black.withAlphaComponent(0.86).cgColor
-    layer?.borderWidth = 1
-    layer?.borderColor = NSColor.white.withAlphaComponent(0.12).cgColor
     layer?.masksToBounds = true
 
-    let label = NSTextField(labelWithString: "● Cove")
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.alignment = .center
-    label.font = .systemFont(ofSize: 17, weight: .semibold)
-    label.textColor = .white
+    visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+    visualEffectView.material = .hudWindow
+    visualEffectView.blendingMode = .behindWindow
+    visualEffectView.state = .active
+    visualEffectView.wantsLayer = true
+    visualEffectView.layer?.cornerRadius = compactPanelHeight / 2
+    visualEffectView.layer?.cornerCurve = .continuous
+    visualEffectView.layer?.masksToBounds = true
+
+    tintView.translatesAutoresizingMaskIntoConstraints = false
+    tintView.wantsLayer = true
+    tintView.layer?.cornerRadius = compactPanelHeight / 2
+    tintView.layer?.cornerCurve = .continuous
+    tintView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.24).cgColor
+    tintView.layer?.borderWidth = 1
+    tintView.layer?.borderColor = NSColor.white.withAlphaComponent(0.18).cgColor
+    tintView.layer?.masksToBounds = true
+
+    compactTitle.translatesAutoresizingMaskIntoConstraints = false
+    compactTitle.alignment = .center
+    compactTitle.font = .systemFont(ofSize: 16, weight: .semibold)
+    compactTitle.textColor = .white
+
+    expandedTitle.translatesAutoresizingMaskIntoConstraints = false
+    expandedTitle.font = .systemFont(ofSize: 15, weight: .semibold)
+    expandedTitle.textColor = .white
+    expandedTitle.alphaValue = 0
+
+    expandedSubtitle.translatesAutoresizingMaskIntoConstraints = false
+    expandedSubtitle.font = .systemFont(ofSize: 12, weight: .medium)
+    expandedSubtitle.textColor = NSColor.white.withAlphaComponent(0.68)
+    expandedSubtitle.alphaValue = 0
+
+    statusPill.translatesAutoresizingMaskIntoConstraints = false
+    statusPill.alignment = .center
+    statusPill.font = .systemFont(ofSize: 11, weight: .semibold)
+    statusPill.textColor = NSColor.white.withAlphaComponent(0.82)
+    statusPill.wantsLayer = true
+    statusPill.layer?.cornerRadius = 10
+    statusPill.layer?.cornerCurve = .continuous
+    statusPill.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.12).cgColor
 
     settingsButton.translatesAutoresizingMaskIntoConstraints = false
     settingsButton.isBordered = false
@@ -63,12 +206,38 @@ final class CapsuleView: NSView {
     settingsButton.layer?.cornerRadius = settingsButtonSize / 2
     settingsButton.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.10).cgColor
 
-    addSubview(label)
+    addSubview(visualEffectView)
+    addSubview(tintView)
+    addSubview(compactTitle)
+    addSubview(expandedTitle)
+    addSubview(expandedSubtitle)
+    addSubview(statusPill)
     addSubview(settingsButton)
 
     NSLayoutConstraint.activate([
-      label.centerXAnchor.constraint(equalTo: centerXAnchor),
-      label.centerYAnchor.constraint(equalTo: centerYAnchor),
+      visualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      visualEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      visualEffectView.topAnchor.constraint(equalTo: topAnchor),
+      visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+      tintView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      tintView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      tintView.topAnchor.constraint(equalTo: topAnchor),
+      tintView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+      compactTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+      compactTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+      expandedTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+      expandedTitle.topAnchor.constraint(equalTo: topAnchor, constant: 17),
+
+      expandedSubtitle.leadingAnchor.constraint(equalTo: expandedTitle.leadingAnchor),
+      expandedSubtitle.topAnchor.constraint(equalTo: expandedTitle.bottomAnchor, constant: 3),
+
+      statusPill.leadingAnchor.constraint(equalTo: expandedTitle.trailingAnchor, constant: 12),
+      statusPill.centerYAnchor.constraint(equalTo: expandedTitle.centerYAnchor),
+      statusPill.widthAnchor.constraint(equalToConstant: 46),
+      statusPill.heightAnchor.constraint(equalToConstant: 20),
 
       settingsButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
       settingsButton.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -79,6 +248,38 @@ final class CapsuleView: NSView {
 
   @objc private func settingsPressed() {
     print("Settings button pressed")
+    onSettingsPressed?(settingsButton)
+  }
+
+  func setState(_ state: OverlayState, animated: Bool) {
+    let isExpanded = state == .expanded
+    let radius = (isExpanded ? expandedPanelHeight : compactPanelHeight) / 2
+    let compactAlpha: CGFloat = isExpanded ? 0 : 1
+    let expandedAlpha: CGFloat = isExpanded ? 1 : 0
+    let tintColor = NSColor.black
+      .withAlphaComponent(isExpanded ? 0.20 : 0.24)
+      .cgColor
+
+    layer?.cornerRadius = radius
+    visualEffectView.layer?.cornerRadius = radius
+    tintView.layer?.cornerRadius = radius
+    tintView.layer?.backgroundColor = tintColor
+
+    if animated {
+      NSAnimationContext.runAnimationGroup { context in
+        context.duration = 0.18
+        context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        compactTitle.animator().alphaValue = compactAlpha
+        expandedTitle.animator().alphaValue = expandedAlpha
+        expandedSubtitle.animator().alphaValue = expandedAlpha
+        statusPill.animator().alphaValue = expandedAlpha
+      }
+    } else {
+      compactTitle.alphaValue = compactAlpha
+      expandedTitle.alphaValue = expandedAlpha
+      expandedSubtitle.alphaValue = expandedAlpha
+      statusPill.alphaValue = expandedAlpha
+    }
   }
 }
 
@@ -86,8 +287,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   private var panel: NotchPanel?
   private var capsuleView: CapsuleView?
   private var mouseTimer: Timer?
+  private var animationTimer: Timer?
   private var workspaceObserver: NSObjectProtocol?
   private var screenObserver: NSObjectProtocol?
+  private var settingsPopover: NSPopover?
+  private var overlayState: OverlayState = .compact
+  private var isHovering = false
+  private var lastLoggedNotchDescription = ""
+  private var springFrame: SpringFrame?
+  private var springVelocity = SpringFrame(NSRect.zero)
 
   func applicationDidFinishLaunching(_ notification: Notification) {
     NSApp.setActivationPolicy(.accessory)
@@ -98,6 +306,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillTerminate(_ notification: Notification) {
     mouseTimer?.invalidate()
+    animationTimer?.invalidate()
 
     if let workspaceObserver {
       NSWorkspace.shared.notificationCenter.removeObserver(workspaceObserver)
@@ -115,9 +324,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     let metrics = notchMetrics(for: screen)
-    let originX = metrics.centerX - panelWidth / 2
-    let originY = metrics.topSafeBottomY - panelHeight - topInset
-    let frame = NSRect(x: originX, y: originY, width: panelWidth, height: panelHeight)
+    logNotchMetrics(metrics)
+
+    let frame = panelFrame(for: overlayState, metrics: metrics)
 
     let panel = NotchPanel(
       contentRect: frame,
@@ -125,14 +334,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       backing: .buffered,
       defer: false
     )
-    let capsuleView = CapsuleView(frame: NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight))
-
-    print("Cove notch metrics:", [
-      "centerX": metrics.centerX,
-      "safeTopInset": metrics.safeTopInset,
-      "topSafeBottomY": metrics.topSafeBottomY,
-      "notchWidth": metrics.notchWidth
-    ])
+    let capsuleView = CapsuleView(frame: NSRect(origin: .zero, size: frame.size))
+    capsuleView.autoresizingMask = [.width, .height]
+    capsuleView.setState(overlayState, animated: false)
+    capsuleView.onSettingsPressed = { [weak self] button in
+      self?.showSettingsPopover(from: button)
+    }
 
     panel.contentView = capsuleView
     panel.isOpaque = false
@@ -169,8 +376,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     self.panel = panel
     self.capsuleView = capsuleView
+    springFrame = SpringFrame(frame)
 
     panel.orderFrontRegardless()
+    logPanelFrame(frame, reason: "initial")
     startSettingsMouseGate()
     updatePanelTransparency(for: NSWorkspace.shared.frontmostApplication)
   }
@@ -185,11 +394,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let safeTopInset = screen.safeAreaInsets.top
     let leftAuxiliaryArea = screen.auxiliaryTopLeftArea
     let rightAuxiliaryArea = screen.auxiliaryTopRightArea
-    let hasNotchGap = !leftAuxiliaryArea.isEmpty &&
-      !rightAuxiliaryArea.isEmpty &&
-      rightAuxiliaryArea.minX > leftAuxiliaryArea.maxX
 
-    if hasNotchGap {
+    if
+      let leftAuxiliaryArea,
+      let rightAuxiliaryArea,
+      !leftAuxiliaryArea.isEmpty,
+      !rightAuxiliaryArea.isEmpty,
+      rightAuxiliaryArea.minX > leftAuxiliaryArea.maxX
+    {
       let notchMinX = leftAuxiliaryArea.maxX
       let notchMaxX = rightAuxiliaryArea.minX
       let notchWidth = notchMaxX - notchMinX
@@ -199,7 +411,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         centerX: notchMinX + notchWidth / 2,
         safeTopInset: safeTopInset,
         topSafeBottomY: topSafeBottomY,
-        notchWidth: notchWidth
+        notchWidth: notchWidth,
+        notchHeight: frame.maxY - topSafeBottomY,
+        screenFrame: frame,
+        visibleFrame: visibleFrame,
+        auxiliaryTopLeftArea: leftAuxiliaryArea,
+        auxiliaryTopRightArea: rightAuxiliaryArea,
+        hasHardwareNotch: true
       )
     }
 
@@ -214,15 +432,48 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       centerX: frame.midX,
       safeTopInset: safeTopInset,
       topSafeBottomY: topSafeBottomY,
-      notchWidth: 0
+      notchWidth: 0,
+      notchHeight: max(0, frame.maxY - topSafeBottomY),
+      screenFrame: frame,
+      visibleFrame: visibleFrame,
+      auxiliaryTopLeftArea: leftAuxiliaryArea ?? .zero,
+      auxiliaryTopRightArea: rightAuxiliaryArea ?? .zero,
+      hasHardwareNotch: false
+    )
+  }
+
+  private func panelSize(for state: OverlayState, metrics: NotchMetrics) -> NSSize {
+    switch state {
+    case .compact:
+      return NSSize(
+        width: max(metrics.notchWidth + notchHorizontalPadding, minimumCompactPanelWidth),
+        height: compactPanelHeight
+      )
+    case .expanded:
+      return NSSize(width: expandedPanelWidth, height: expandedPanelHeight)
+    }
+  }
+
+  private func panelFrame(for state: OverlayState, metrics: NotchMetrics) -> NSRect {
+    let size = panelSize(for: state, metrics: metrics)
+    let topEdge = metrics.topSafeBottomY + notchAttachOverlap
+
+    return NSRect(
+      x: metrics.centerX - size.width / 2,
+      y: topEdge - size.height,
+      width: size.width,
+      height: size.height
     )
   }
 
   private func startSettingsMouseGate() {
-    mouseTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+    mouseTimer?.invalidate()
+
+    let timer = Timer(timeInterval: 0.05, repeats: true) { [weak self] _ in
       guard
-        let panel = self?.panel,
-        let capsuleView = self?.capsuleView
+        let self,
+        let panel = self.panel,
+        let capsuleView = self.capsuleView
       else {
         return
       }
@@ -234,17 +485,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       )
       let settingsFrameOnScreen = panel.convertToScreen(settingsFrame)
       let isOverSettings = settingsFrameOnScreen.contains(mouseLocation)
+      let hoverFrame = panel.frame.insetBy(dx: -hoverSlop, dy: -hoverSlop)
+      let shouldPreserveCompactSettingsClick = overlayState == .compact && isOverSettings
+      let nextHoverState = (
+        hoverFrame.contains(mouseLocation) &&
+          !shouldPreserveCompactSettingsClick
+      ) || (settingsPopover?.isShown ?? false)
+
+      if isHovering != nextHoverState {
+        isHovering = nextHoverState
+        print("Cove hover state:", nextHoverState ? "hovering" : "not hovering")
+        setOverlayState(nextHoverState ? .expanded : .compact)
+      }
 
       if panel.ignoresMouseEvents == isOverSettings {
         panel.ignoresMouseEvents = !isOverSettings
+        print("Cove mouse passthrough:", panel.ignoresMouseEvents ? "enabled" : "settings button active")
       }
 
       if isOverSettings {
-        self?.setPanelAlpha(activeAlpha)
+        setPanelAlpha(activeAlpha)
       } else {
-        self?.updatePanelTransparency(for: NSWorkspace.shared.frontmostApplication)
+        updatePanelTransparency(for: NSWorkspace.shared.frontmostApplication)
       }
     }
+
+    mouseTimer = timer
+    RunLoop.main.add(timer, forMode: .common)
   }
 
   private func observeActiveApplicationChanges() {
@@ -254,6 +521,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       queue: .main
     ) { [weak self] notification in
       let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication
+      print("Cove active application changed:", [
+        "name": app?.localizedName ?? "unknown",
+        "bundleIdentifier": app?.bundleIdentifier ?? "unknown",
+        "pid": app?.processIdentifier ?? -1
+      ])
       self?.updatePanelTransparency(for: app)
     }
   }
@@ -272,7 +544,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let isCoveProcess = activeApplication?.processIdentifier == ProcessInfo.processInfo.processIdentifier
     let isCoveBundle = activeApplication?.bundleIdentifier == Bundle.main.bundleIdentifier
     let isCoveActive = isCoveProcess || isCoveBundle
-    setPanelAlpha(isCoveActive ? activeAlpha : inactiveAlpha)
+    let shouldStayBright = isCoveActive || isHovering || (settingsPopover?.isShown ?? false)
+    setPanelAlpha(shouldStayBright ? activeAlpha : inactiveAlpha)
   }
 
   private func repositionPanel() {
@@ -284,14 +557,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     let metrics = notchMetrics(for: screen)
-    let frame = NSRect(
-      x: metrics.centerX - panelWidth / 2,
-      y: metrics.topSafeBottomY - panelHeight - topInset,
-      width: panelWidth,
-      height: panelHeight
-    )
+    logNotchMetrics(metrics)
+    let frame = panelFrame(for: overlayState, metrics: metrics)
 
     panel.setFrame(frame, display: true, animate: false)
+    springFrame = SpringFrame(frame)
+    logPanelFrame(frame, reason: "screen changed")
   }
 
   private func setPanelAlpha(_ alpha: CGFloat) {
@@ -304,6 +575,151 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
       panel.animator().alphaValue = alpha
     }
+  }
+
+  private func setOverlayState(_ nextState: OverlayState) {
+    guard overlayState != nextState else {
+      return
+    }
+
+    overlayState = nextState
+    print("Cove expansion state:", nextState.rawValue)
+    capsuleView?.setState(nextState, animated: true)
+
+    guard let screen = primaryScreen() else {
+      return
+    }
+
+    let metrics = notchMetrics(for: screen)
+    let targetFrame = panelFrame(for: nextState, metrics: metrics)
+    animatePanel(to: targetFrame)
+  }
+
+  private func animatePanel(to targetFrame: NSRect) {
+    guard let panel else {
+      return
+    }
+
+    animationTimer?.invalidate()
+
+    if springFrame == nil {
+      springFrame = SpringFrame(panel.frame)
+    }
+
+    let timer = Timer(timeInterval: springInterval, repeats: true) { [weak self] timer in
+      guard
+        let self,
+        let panel = self.panel,
+        var frame = self.springFrame
+      else {
+        timer.invalidate()
+        return
+      }
+
+      let target = SpringFrame(targetFrame)
+      let step = CGFloat(springInterval)
+
+      Self.spring(&frame.x, velocity: &self.springVelocity.x, target: target.x, step: step)
+      Self.spring(&frame.y, velocity: &self.springVelocity.y, target: target.y, step: step)
+      Self.spring(&frame.width, velocity: &self.springVelocity.width, target: target.width, step: step)
+      Self.spring(&frame.height, velocity: &self.springVelocity.height, target: target.height, step: step)
+
+      self.springFrame = frame
+      panel.setFrame(frame.rect, display: true, animate: false)
+
+      let remainingDistance =
+        abs(frame.x - target.x) +
+        abs(frame.y - target.y) +
+        abs(frame.width - target.width) +
+        abs(frame.height - target.height)
+      let remainingVelocity =
+        abs(self.springVelocity.x) +
+        abs(self.springVelocity.y) +
+        abs(self.springVelocity.width) +
+        abs(self.springVelocity.height)
+
+      if remainingDistance < 0.7 && remainingVelocity < 0.7 {
+        panel.setFrame(targetFrame, display: true, animate: false)
+        self.springFrame = target
+        self.springVelocity = SpringFrame(NSRect.zero)
+        self.logPanelFrame(targetFrame, reason: "spring settled")
+        timer.invalidate()
+      }
+    }
+
+    animationTimer = timer
+    RunLoop.main.add(timer, forMode: .common)
+  }
+
+  private static func spring(
+    _ value: inout CGFloat,
+    velocity: inout CGFloat,
+    target: CGFloat,
+    step: CGFloat
+  ) {
+    let displacement = target - value
+    let force = displacement * springStiffness
+    let dampingForce = velocity * springDamping
+    let acceleration = force - dampingForce
+
+    velocity += acceleration * step
+    value += velocity * step
+  }
+
+  private func showSettingsPopover(from button: NSButton) {
+    let popover: NSPopover
+
+    if let settingsPopover {
+      popover = settingsPopover
+    } else {
+      let newPopover = NSPopover()
+      newPopover.behavior = .transient
+      newPopover.animates = true
+      newPopover.contentViewController = SettingsViewController()
+      settingsPopover = newPopover
+      popover = newPopover
+    }
+
+    if popover.isShown {
+      popover.performClose(nil)
+      return
+    }
+
+    setOverlayState(.expanded)
+    setPanelAlpha(activeAlpha)
+    print("Cove settings popover: opening")
+    popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+  }
+
+  private func logNotchMetrics(_ metrics: NotchMetrics) {
+    let description = [
+      "centerX": metrics.centerX,
+      "safeTopInset": metrics.safeTopInset,
+      "topSafeBottomY": metrics.topSafeBottomY,
+      "notchWidth": metrics.notchWidth,
+      "notchHeight": metrics.notchHeight,
+      "hasHardwareNotch": metrics.hasHardwareNotch,
+      "screenFrame": NSStringFromRect(metrics.screenFrame),
+      "visibleFrame": NSStringFromRect(metrics.visibleFrame),
+      "auxiliaryTopLeftArea": NSStringFromRect(metrics.auxiliaryTopLeftArea),
+      "auxiliaryTopRightArea": NSStringFromRect(metrics.auxiliaryTopRightArea)
+    ] as [String: Any]
+    let stringDescription = String(describing: description)
+
+    guard stringDescription != lastLoggedNotchDescription else {
+      return
+    }
+
+    lastLoggedNotchDescription = stringDescription
+    print("Cove notch metrics:", description)
+  }
+
+  private func logPanelFrame(_ frame: NSRect, reason: String) {
+    print("Cove panel position:", [
+      "reason": reason,
+      "state": overlayState.rawValue,
+      "frame": NSStringFromRect(frame)
+    ])
   }
 }
 
