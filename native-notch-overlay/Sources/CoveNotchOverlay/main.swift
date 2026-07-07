@@ -393,8 +393,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let visibleFrame = screen.visibleFrame
     let safeTopInset = screen.safeAreaInsets.top
 
-    if
-      let leftAuxiliaryArea = screen.auxiliaryTopLeftArea,
+    if let leftAuxiliaryArea = screen.auxiliaryTopLeftArea,
       let rightAuxiliaryArea = screen.auxiliaryTopRightArea,
       !leftAuxiliaryArea.isEmpty,
       !rightAuxiliaryArea.isEmpty,
