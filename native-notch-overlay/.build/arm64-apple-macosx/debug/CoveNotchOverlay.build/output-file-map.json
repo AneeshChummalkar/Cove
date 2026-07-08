@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/primary.swiftdeps"
+  },
+  "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift": {
+    "dependencies": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.d",
+    "object": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o",
+    "swiftmodule": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swiftdeps",
+    "diagnostics": "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.dia"
+  }
+}

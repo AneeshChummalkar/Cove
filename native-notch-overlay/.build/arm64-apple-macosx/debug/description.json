@@ -1,0 +1,241 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.CoveNotchOverlay-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/sources",
+      "importPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "CoveNotchOverlay",
+      "moduleOutputPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules/CoveNotchOverlay.swiftmodule",
+      "objects" : [
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j6",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "CoveNotchOverlay_main",
+        "-color-diagnostics",
+        "-swift-version",
+        "5",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "native_notch_overlay"
+      ],
+      "outputFileMapPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules/CoveNotchOverlay.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
+      ],
+      "tempsPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "CoveNotchOverlay" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "CoveNotchOverlay",
+      "-package-name",
+      "native_notch_overlay",
+      "-c",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift",
+      "-I",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j6",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "CoveNotchOverlay_main",
+      "-color-diagnostics",
+      "-swift-version",
+      "5",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "native_notch_overlay",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "CoveNotchOverlay" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay-entitlement.plist"
+    },
+    "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/sources"
+    },
+    "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.product/Objects.LinkFileList"
+    },
+    "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}
