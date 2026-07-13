@@ -17,6 +17,7 @@ final class SettingsContainerViewController: NSViewController, SettingsSidebarVi
     contentHost = NSView()
     print("[Settings][Container Init 04] Content host created")
     super.init(nibName: nil, bundle: nil)
+    preferredContentSize = SettingsTheme.minimumWindowSize
     print("[Settings][Container Init 05] NSViewController.init returned")
   }
 
@@ -26,7 +27,9 @@ final class SettingsContainerViewController: NSViewController, SettingsSidebarVi
 
   override func loadView() {
     print("[Settings][Container Load 01] loadView() started")
-    let rootView = NSVisualEffectView()
+    let rootView = NSVisualEffectView(
+      frame: NSRect(origin: .zero, size: preferredContentSize)
+    )
     print("[Settings][Container Load 02] Root NSVisualEffectView created")
     rootView.material = .underWindowBackground
     rootView.blendingMode = .behindWindow

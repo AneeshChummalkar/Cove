@@ -37,6 +37,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
     window.isReleasedWhenClosed = false
     print("[Settings][Init 13] Window release behavior assigned")
     window.minSize = SettingsTheme.minimumWindowSize
+    window.contentMinSize = SettingsTheme.minimumWindowSize
     print("[Settings][Init 14] Window minimum size assigned:", NSStringFromSize(window.minSize))
 
     print("[Settings][Init 15] Assigning window.contentViewController")
