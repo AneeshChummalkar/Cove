@@ -2,7 +2,7 @@
 
 ## Vision
 
-Cove is a desktop-first personal AI runtime that lives on the user's computer: voice-first, privacy-first, permission-aware, memory-capable, and deeply integrated with macOS and Windows without becoming a web dashboard.
+Cove is a desktop-first personal AI runtime that lives on a user's computer: voice-first, privacy-first, permission-aware, memory-capable, and deeply integrated with macOS and Windows without becoming a web dashboard.
 
 ## Current Sprint
 
@@ -26,18 +26,20 @@ Cove is a desktop-first personal AI runtime that lives on the user's computer: v
 - Validate the native macOS notch overlay on real macOS hardware, including notched and non-notched displays.
 - Compile and visually validate the native Settings window on macOS in System, Light, and Dark appearances.
 - Connect real permission status detection after the Settings foundation is validated; keep permission actions non-functional until then.
-- Begin Phase 5 local runtime lifecycle work after Phase 4 exit criteria are met.
+- Add Menu Bar integration, Launch at Login, global keyboard shortcuts, and multi-monitor support.
+- Begin Phase 5 local runtime lifecycle, AI runtime, context awareness, command palette, clipboard history, and memory work after Phase 4 exit criteria are met.
 
 ## Future
 
 - Phase 5: Local runtime lifecycle, secure local settings, permission detection, kill switch, and append-only audit logging.
-- Phase 6: Controlled low-risk integrations for app launch, focus, read-only context, and browser/document experiments.
-- Phase 7: Persistent background agents with scoped memory, approval queues, notifications, and resumability.
-- Phase 8: Manually enabled voice mode with optional identity verification.
+- Phase 6: Controlled low-risk integrations for app launch, focus, read-only context, browser/document experiments, plugins, and automation.
+- Phase 7: Persistent background agents with scoped memory, approval queues, notifications, resumability, and optional cross-device sync.
+- Phase 8: Manually enabled voice mode with optional voice and face identity verification.
 - Phase 9: Production hardening for signing, updates, storage, telemetry policy, crash recovery, accessibility, performance, and battery usage.
 
 ## Technical Debt
 
 - Add macOS-based build verification for `native-notch-overlay`; the current container does not include `swift`, `xcodebuild`, or AppKit.
 - Resolve root-vs-nested repository duplication so `native-notch-overlay/` and `cove/native-notch-overlay/` cannot drift accidentally.
-- Capture hardware-specific notch geometry screenshots to avoid tuning solely from safe-area estimates.
+- Capture hardware-specific notch geometry screenshots and improve geometry, material tuning, and animation refinement.
+- Profile runtime performance and battery usage before expanding background behavior.
