@@ -90,12 +90,9 @@ class BaseSectionViewController: NSViewController {
       let subtitle = NSTextField(wrappingLabelWithString: sectionSubtitle)
       subtitle.font = SettingsTheme.subtitleFont
       subtitle.textColor = .secondaryLabelColor
+      subtitle.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
       headerStack.addArrangedSubview(subtitle)
-      print("[Settings][Section Header 06] Subtitle added; activating width constraint:", sectionTitle)
-      subtitle.widthAnchor.constraint(
-        equalTo: contentStack.widthAnchor, constant: -(SettingsTheme.contentInset * 2)
-      ).isActive = true
-      print("[Settings][Section Header 07] Subtitle width constraint activated:", sectionTitle)
+      print("[Settings][Section Header 06] Subtitle added to header stack:", sectionTitle)
     }
 
     contentStack.addArrangedSubview(headerStack)
