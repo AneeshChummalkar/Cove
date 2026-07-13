@@ -102,6 +102,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
     printWindowState(window, step: "before activation")
     NSApp.activate(ignoringOtherApps: true)
     NSApp.unhide(nil)
+    printLayoutDiagnostics(window)
     showWindow(nil)
     if window.isMiniaturized {
       window.deminiaturize(nil)
@@ -135,6 +136,28 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
     if !isOnScreen {
       window.center()
       print("[Settings] Recentered off-screen window:", NSStringFromRect(window.frame))
+    }
+  }
+
+  private func printLayoutDiagnostics(_ window: NSWindow) {
+    if let contentView = window.contentView {
+      print(
+        "[Settings][Layout] window.contentView.fittingSize:",
+        NSStringFromSize(contentView.fittingSize)
+      )
+      print(
+        "[Settings][Layout] window.contentView.intrinsicContentSize:",
+        NSStringFromSize(contentView.intrinsicContentSize)
+      )
+    } else {
+      print("[Settings][Layout] window.contentView.fittingSize: unavailable")
+      print("[Settings][Layout] window.contentView.intrinsicContentSize: unavailable")
+    }
+
+    if let containerViewController = window.contentViewController as? SettingsContainerViewController {
+      containerViewController.printLayoutDiagnostics()
+    } else {
+      print("[Settings][Layout] SettingsContainerViewController: unavailable")
     }
   }
 

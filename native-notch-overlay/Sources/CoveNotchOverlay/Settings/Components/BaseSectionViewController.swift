@@ -9,6 +9,8 @@ class BaseSectionViewController: NSViewController {
   var sectionSubtitle: String? { nil }
 
   let contentStack = NSStackView()
+  private weak var diagnosticScrollView: NSScrollView?
+  private weak var diagnosticDocumentView: NSView?
 
   override func loadView() {
     print("[Settings][Section Load 01] BaseSectionViewController.loadView() started:", sectionTitle)
@@ -49,6 +51,8 @@ class BaseSectionViewController: NSViewController {
     print("[Settings][Section Load 08] Content stack constraints activated:", sectionTitle)
 
     scrollView.documentView = documentView
+    diagnosticScrollView = scrollView
+    diagnosticDocumentView = documentView
     print("[Settings][Section Load 09] Scroll document view assigned:", sectionTitle)
     print("[Settings][Section Load 10] Activating document width constraint:", sectionTitle)
     NSLayoutConstraint.activate([
@@ -69,6 +73,31 @@ class BaseSectionViewController: NSViewController {
 
   /// Override to append cards via `contentStack.addArrangedSubview(_:)`.
   func buildContent() {}
+
+  func printLayoutDiagnostics() {
+    if let scrollView = diagnosticScrollView {
+      print(
+        "[Settings][Layout] NSScrollView.fittingSize:",
+        NSStringFromSize(scrollView.fittingSize)
+      )
+    } else {
+      print("[Settings][Layout] NSScrollView.fittingSize: unavailable")
+    }
+
+    if let documentView = diagnosticDocumentView {
+      print(
+        "[Settings][Layout] documentView.fittingSize:",
+        NSStringFromSize(documentView.fittingSize)
+      )
+    } else {
+      print("[Settings][Layout] documentView.fittingSize: unavailable")
+    }
+
+    print(
+      "[Settings][Layout] contentStack.fittingSize:",
+      NSStringFromSize(contentStack.fittingSize)
+    )
+  }
 
   private func addHeader() {
     print("[Settings][Section Header 01] Creating title label:", sectionTitle)

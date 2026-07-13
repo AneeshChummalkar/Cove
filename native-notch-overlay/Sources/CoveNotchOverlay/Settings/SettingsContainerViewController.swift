@@ -86,6 +86,32 @@ final class SettingsContainerViewController: NSViewController, SettingsSidebarVi
     show(section: section, animated: true)
   }
 
+  func printLayoutDiagnostics() {
+    print(
+      "[Settings][Layout] SettingsContainerViewController.view.fittingSize:",
+      NSStringFromSize(view.fittingSize)
+    )
+    print(
+      "[Settings][Layout] sidebar.fittingSize:",
+      NSStringFromSize(sidebar.fittingSize)
+    )
+    print(
+      "[Settings][Layout] contentHost.fittingSize:",
+      NSStringFromSize(contentHost.fittingSize)
+    )
+
+    guard let currentViewController else {
+      print("[Settings][Layout] current section view.fittingSize: unavailable")
+      return
+    }
+
+    print(
+      "[Settings][Layout] current section view.fittingSize:",
+      NSStringFromSize(currentViewController.view.fittingSize)
+    )
+    (currentViewController as? BaseSectionViewController)?.printLayoutDiagnostics()
+  }
+
   private func show(section: SettingsSection, animated: Bool) {
     print("[Settings][Container Show 01] show(section:) started:", section.title)
     let nextViewController: NSViewController
