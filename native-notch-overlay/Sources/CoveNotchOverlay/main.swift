@@ -226,7 +226,12 @@ final class CapsuleView: NSView {
 
   @objc private func settingsPressed() {
     print("Settings button pressed")
-    onSettingsPressed?(settingsButton)
+    let handler = onSettingsPressed
+    print("[Settings] CapsuleView forwarding gear action:", [
+      "capsule": String(describing: ObjectIdentifier(self)),
+      "handlerInstalled": handler != nil
+    ])
+    handler?(settingsButton)
   }
 
   func setNotchAttachment(width: CGFloat, visible: Bool, animated: Bool) {
@@ -376,8 +381,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       animated: false
     )
     capsuleView.onSettingsPressed = { [weak self] _ in
-      self?.showSettingsWindow()
+      guard let self else {
+        print("[Settings] Gear handler could not continue: AppDelegate was released")
+        return
+      }
+      print("[Settings] AppDelegate gear handler entered:", String(describing: ObjectIdentifier(self)))
+      self.showSettingsWindow()
     }
+    print("[Settings] Gear handler installed on CapsuleView:", [
+      "appDelegate": String(describing: ObjectIdentifier(self)),
+      "capsule": String(describing: ObjectIdentifier(capsuleView))
+    ])
 
     panel.contentView = capsuleView
     panel.isOpaque = false
@@ -734,11 +748,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   private func showSettingsWindow() {
+    print("[Settings] showSettingsWindow() entered:", [
+      "hasExistingController": settingsWindowController != nil,
+      "appIsActive": NSApp.isActive,
+      "appIsHidden": NSApp.isHidden
+    ])
     setOverlayState(.expanded)
     setPanelAlpha(activeAlpha)
-    let controller = settingsWindowController ?? SettingsWindowController()
-    settingsWindowController = controller
-    print("Cove settings window: opening")
+
+    let controller: SettingsWindowController
+    if let existingController = settingsWindowController {
+      controller = existingController
+      print("[Settings] Reusing retained SettingsWindowController:", String(describing: ObjectIdentifier(controller)))
+    } else {
+      print("[Settings] Instantiating SettingsWindowController")
+      controller = SettingsWindowController()
+      settingsWindowController = controller
+      print("[Settings] SettingsWindowController retained by AppDelegate:", [
+        "controller": String(describing: ObjectIdentifier(controller)),
+        "retained": settingsWindowController === controller
+      ])
+    }
+
+    print("[Settings] Calling SettingsWindowController.present()")
     controller.present()
   }
 
@@ -778,4 +810,7 @@ let app = NSApplication.shared
 let delegate = AppDelegate()
 
 app.delegate = delegate
-app.run()
+withExtendedLifetime(delegate) {
+  print("[Settings] AppDelegate lifetime pinned for application run loop:", String(describing: ObjectIdentifier(delegate)))
+  app.run()
+}
