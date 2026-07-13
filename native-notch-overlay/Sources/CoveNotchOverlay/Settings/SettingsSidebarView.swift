@@ -17,9 +17,14 @@ final class SettingsSidebarView: NSView {
 
   init(selected: SettingsSection) {
     self.selectedSection = selected
+    print("[Settings][Sidebar Init 01] SettingsSidebarView.init() started:", selected.title)
     super.init(frame: .zero)
+    print("[Settings][Sidebar Init 02] NSView.init returned")
     translatesAutoresizingMaskIntoConstraints = false
+    print("[Settings][Sidebar Init 03] Auto-resizing mask translation disabled")
+    print("[Settings][Sidebar Init 04] Calling buildView()")
     buildView()
+    print("[Settings][Sidebar Init 05] buildView() returned")
   }
 
   required init?(coder: NSCoder) {
@@ -27,36 +32,49 @@ final class SettingsSidebarView: NSView {
   }
 
   private func buildView() {
+    print("[Settings][Sidebar Build 01] Creating sidebar NSVisualEffectView")
     let effectView = NSVisualEffectView()
+    print("[Settings][Sidebar Build 02] Sidebar NSVisualEffectView created")
     effectView.material = .sidebar
     effectView.blendingMode = .behindWindow
     effectView.state = .followsWindowActiveState
     effectView.translatesAutoresizingMaskIntoConstraints = false
+    print("[Settings][Sidebar Build 03] Sidebar NSVisualEffectView configured")
 
     selectionIndicator.translatesAutoresizingMaskIntoConstraints = true
     selectionIndicator.wantsLayer = true
     selectionIndicator.layer?.cornerRadius = SettingsTheme.controlCornerRadius
     selectionIndicator.layer?.cornerCurve = .continuous
     updateSelectionSurface()
+    print("[Settings][Sidebar Build 04] Selection indicator configured")
 
     let markBackground = NSView()
+    print("[Settings][Sidebar Build 05] Mark background created")
     markBackground.translatesAutoresizingMaskIntoConstraints = false
     SettingsTheme.configureRoundedSurface(markBackground, radius: 10)
+    print("[Settings][Sidebar Build 06] Mark background configured")
 
+    print("[Settings][Sidebar Build 07] Resolving Cove system symbol")
+    let markImage = NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: "Cove")
+    print("[Settings][Sidebar Build 08] Cove system symbol resolved:", markImage != nil)
     let mark = NSImageView(
-      image: NSImage(systemSymbolName: "waveform.path.ecg", accessibilityDescription: "Cove") ?? NSImage()
+      image: markImage ?? NSImage()
     )
+    print("[Settings][Sidebar Build 09] Mark image view created")
     mark.translatesAutoresizingMaskIntoConstraints = false
     mark.contentTintColor = SettingsTheme.accent
     mark.symbolConfiguration = NSImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
     markBackground.addSubview(mark)
+    print("[Settings][Sidebar Build 10] Mark image view configured and added")
 
     let appTitle = NSTextField(labelWithString: "Cove")
+    print("[Settings][Sidebar Build 11] App title created")
     appTitle.font = .systemFont(ofSize: 15, weight: .bold)
     appTitle.textColor = .labelColor
     appTitle.translatesAutoresizingMaskIntoConstraints = false
 
     let eyebrow = NSTextField(labelWithString: "SETTINGS")
+    print("[Settings][Sidebar Build 12] Eyebrow created")
     eyebrow.font = .systemFont(ofSize: 9.5, weight: .bold)
     eyebrow.textColor = .tertiaryLabelColor
     eyebrow.translatesAutoresizingMaskIntoConstraints = false
@@ -65,15 +83,19 @@ final class SettingsSidebarView: NSView {
     stackView.orientation = .vertical
     stackView.alignment = .leading
     stackView.spacing = 2
+    print("[Settings][Sidebar Build 13] Sidebar stack configured")
 
     for section in SettingsSection.allCases {
+      print("[Settings][Sidebar Build 14] Creating row:", section.title)
       let button = SidebarRowButton(section: section)
+      print("[Settings][Sidebar Build 15] Row created:", section.title)
       button.isSelectedRow = section == selectedSection
       button.target = self
       button.action = #selector(rowPressed(_:))
       stackView.addArrangedSubview(button)
       button.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
       rowButtons[section] = button
+      print("[Settings][Sidebar Build 16] Row configured and added:", section.title)
     }
 
     addSubview(effectView)
@@ -82,7 +104,9 @@ final class SettingsSidebarView: NSView {
     addSubview(appTitle)
     addSubview(eyebrow)
     addSubview(stackView)
+    print("[Settings][Sidebar Build 17] Sidebar subviews added")
 
+    print("[Settings][Sidebar Build 18] Activating sidebar constraints")
     NSLayoutConstraint.activate([
       effectView.leadingAnchor.constraint(equalTo: leadingAnchor),
       effectView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -107,6 +131,7 @@ final class SettingsSidebarView: NSView {
       stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
       stackView.topAnchor.constraint(equalTo: markBackground.bottomAnchor, constant: 24)
     ])
+    print("[Settings][Sidebar Build 19] Sidebar constraints activated")
   }
 
   override func viewDidChangeEffectiveAppearance() {

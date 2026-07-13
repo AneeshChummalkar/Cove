@@ -6,33 +6,57 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
   private var hasPresented = false
 
   init() {
-    print("[Settings] SettingsWindowController.init() started")
+    print("[Settings][Init 01] SettingsWindowController.init() started")
+    print("[Settings][Init 02] Creating SettingsContainerViewController")
     let rootViewController = SettingsContainerViewController()
+    print("[Settings][Init 03] SettingsContainerViewController created")
+
+    print("[Settings][Init 04] Creating NSWindow")
     let window = NSWindow(
       contentRect: NSRect(origin: .zero, size: SettingsTheme.windowSize),
       styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
       backing: .buffered,
       defer: false
     )
+    print("[Settings][Init 05] NSWindow created:", NSStringFromRect(window.frame))
 
     window.title = "Cove Settings"
+    print("[Settings][Init 06] Window title assigned")
     window.titleVisibility = .hidden
+    print("[Settings][Init 07] Window title visibility assigned")
     window.titlebarAppearsTransparent = true
+    print("[Settings][Init 08] Transparent titlebar enabled")
     window.backgroundColor = .clear
+    print("[Settings][Init 09] Window background assigned")
     window.isOpaque = false
+    print("[Settings][Init 10] Window opacity mode assigned")
     window.hasShadow = true
+    print("[Settings][Init 11] Window shadow enabled")
     window.alphaValue = 1
+    print("[Settings][Init 12] Window alpha assigned:", window.alphaValue)
     window.isReleasedWhenClosed = false
+    print("[Settings][Init 13] Window release behavior assigned")
     window.minSize = SettingsTheme.minimumWindowSize
-    window.contentViewController = rootViewController
-    window.animationBehavior = .documentWindow
-    window.collectionBehavior = [.managed, .participatesInCycle]
-    window.setFrameAutosaveName("CoveSettingsWindow")
+    print("[Settings][Init 14] Window minimum size assigned:", NSStringFromSize(window.minSize))
 
+    print("[Settings][Init 15] Assigning window.contentViewController")
+    window.contentViewController = rootViewController
+    print("[Settings][Init 16] window.contentViewController assigned")
+    window.animationBehavior = .documentWindow
+    print("[Settings][Init 17] Window animation behavior assigned")
+    window.collectionBehavior = [.managed, .participatesInCycle]
+    print("[Settings][Init 18] Window collection behavior assigned")
+    window.setFrameAutosaveName("CoveSettingsWindow")
+    print("[Settings][Init 19] Window frame autosave name assigned")
+
+    print("[Settings][Init 20] Calling NSWindowController.init(window:)")
     super.init(window: window)
+    print("[Settings][Init 21] NSWindowController.init(window:) returned")
     window.delegate = self
+    print("[Settings][Init 22] Window delegate assigned")
     shouldCascadeWindows = false
-    print("[Settings] SettingsWindowController.init() completed:", [
+    print("[Settings][Init 23] Window cascading disabled")
+    print("[Settings][Init 24] SettingsWindowController.init() completed:", [
       "controller": String(describing: ObjectIdentifier(self)),
       "window": String(describing: ObjectIdentifier(window)),
       "frame": NSStringFromRect(window.frame),
