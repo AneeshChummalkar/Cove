@@ -24,6 +24,90 @@
       "inputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/BaseSectionViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PermissionCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillButton.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillSegmentedControl.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PlaceholderControl.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsControlFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsRow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AIViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AboutViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AccountViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AppearanceViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/GeneralViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PermissionsViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PrivacySecurityViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsContainerViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSidebarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsTheme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsWindowController.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
         },
         {
@@ -39,6 +123,27 @@
       "moduleName" : "CoveNotchOverlay",
       "moduleOutputPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules/CoveNotchOverlay.swiftmodule",
       "objects" : [
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/BaseSectionViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionCard.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillButton.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillSegmentedControl.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PlaceholderControl.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsCard.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsControlFactory.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsRow.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AIViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AboutViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AccountViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AppearanceViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/GeneralViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionsViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PrivacySecurityViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsContainerViewController.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSection.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSidebarView.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsStore.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsTheme.swift.o",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsWindowController.swift.o",
         "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o"
       ],
       "otherArguments" : [
@@ -89,6 +194,90 @@
       "outputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/BaseSectionViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillButton.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillSegmentedControl.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PlaceholderControl.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsControlFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsRow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AIViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AboutViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AccountViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AppearanceViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/GeneralViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionsViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PrivacySecurityViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsContainerViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSidebarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsTheme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsWindowController.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/main.swift.o"
         },
         {
@@ -98,6 +287,27 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/BaseSectionViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PermissionCard.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillButton.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillSegmentedControl.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PlaceholderControl.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsCard.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsControlFactory.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsRow.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AIViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AboutViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AccountViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AppearanceViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/GeneralViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PermissionsViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PrivacySecurityViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsContainerViewController.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSection.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSidebarView.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsStore.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsTheme.swift",
+        "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsWindowController.swift",
         "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
       ],
       "tempsPath" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build",
@@ -115,6 +325,27 @@
       "-package-name",
       "native_notch_overlay",
       "-c",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/BaseSectionViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PermissionCard.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillButton.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillSegmentedControl.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PlaceholderControl.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsCard.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsControlFactory.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsRow.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AIViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AboutViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AccountViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AppearanceViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/GeneralViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PermissionsViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PrivacySecurityViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsContainerViewController.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSection.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSidebarView.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsStore.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsTheme.swift",
+      "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsWindowController.swift",
       "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift",
       "-I",
       "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/Modules",
@@ -204,6 +435,90 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/BaseSectionViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PermissionCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillButton.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PillSegmentedControl.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/PlaceholderControl.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsControlFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Components/SettingsRow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AIViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AboutViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AccountViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/AppearanceViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/GeneralViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PermissionsViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/Sections/PrivacySecurityViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsContainerViewController.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsSidebarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsTheme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/Settings/SettingsWindowController.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/Sources/CoveNotchOverlay/main.swift"
         }
       ],
@@ -215,6 +530,90 @@
         {
           "kind" : "virtual",
           "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AIViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AboutViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AccountViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/AppearanceViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/BaseSectionViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/GeneralViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PermissionsViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillButton.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PillSegmentedControl.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PlaceholderControl.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/PrivacySecurityViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsContainerViewController.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsControlFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsRow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsSidebarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsTheme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/aneeshchummalkar/Documents/Cove/native-notch-overlay/.build/arm64-apple-macosx/debug/CoveNotchOverlay.build/SettingsWindowController.swift.o"
         },
         {
           "kind" : "file",
