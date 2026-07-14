@@ -34,7 +34,6 @@ final class SettingsContainerViewController: NSViewController, SettingsSidebarVi
     rootView.material = .underWindowBackground
     rootView.blendingMode = .behindWindow
     rootView.state = .followsWindowActiveState
-    rootView.autoresizingMask = [.width, .height]
     print("[Settings][Container Load 03] Root visual effect configured")
 
     sidebar.delegate = self

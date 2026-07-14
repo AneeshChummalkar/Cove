@@ -129,7 +129,8 @@ final class SettingsSidebarView: NSView {
 
       stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
       stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-      stackView.topAnchor.constraint(equalTo: markBackground.bottomAnchor, constant: 24)
+      stackView.topAnchor.constraint(equalTo: markBackground.bottomAnchor, constant: 24),
+      stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12)
     ])
     print("[Settings][Sidebar Build 19] Sidebar constraints activated")
   }

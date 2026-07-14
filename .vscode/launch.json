@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Cove}/native-notch-overlay",
+            "name": "Debug CoveNotchOverlay (native-notch-overlay)",
+            "target": "CoveNotchOverlay",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug CoveNotchOverlay (native-notch-overlay)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Cove}/native-notch-overlay",
+            "name": "Release CoveNotchOverlay (native-notch-overlay)",
+            "target": "CoveNotchOverlay",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release CoveNotchOverlay (native-notch-overlay)"
+        }
+    ]
+}

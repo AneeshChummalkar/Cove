@@ -56,7 +56,8 @@ class BaseSectionViewController: NSViewController {
     print("[Settings][Section Load 09] Scroll document view assigned:", sectionTitle)
     print("[Settings][Section Load 10] Activating document width constraint:", sectionTitle)
     NSLayoutConstraint.activate([
-      documentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+      documentView.widthAnchor.constraint(equalTo: scrollView.contentView.widthAnchor),
+      documentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.contentView.heightAnchor)
     ])
     print("[Settings][Section Load 11] Document width constraint activated:", sectionTitle)
 
