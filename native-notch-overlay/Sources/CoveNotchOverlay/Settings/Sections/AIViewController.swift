@@ -4,6 +4,7 @@ final class AIViewController: BaseSectionViewController, NSTextFieldDelegate {
   private let modelPopup = NSPopUpButton(frame: .zero, pullsDown: false)
   private let apiKeyField = NSSecureTextField()
   private let testConnectionButton = PillButton(title: "Test Connection", style: .tinted)
+  private let chatPreviewButton = PillButton(title: "Open Chat Preview", style: .filled)
   private let openAIClient = OpenAIClient()
   private var isTestingConnection = false
 
@@ -57,6 +58,15 @@ final class AIViewController: BaseSectionViewController, NSTextFieldDelegate {
     addCard(configurationCard)
     updateConfigurationControls()
 
+    let chatPreviewCard = SettingsCard(title: "Chat Preview")
+    configureChatPreviewButton()
+    chatPreviewCard.addRow(SettingsRow(
+      title: "Try Cove Chat",
+      subtitle: "Open a temporary window to test the selected provider.",
+      accessory: chatPreviewButton
+    ))
+    addCard(chatPreviewCard)
+
     let runtimeCard = SettingsCard(title: "Future Runtime")
     runtimeCard.addRow(SettingsRow(
       title: "Agent Mode",
@@ -98,6 +108,15 @@ final class AIViewController: BaseSectionViewController, NSTextFieldDelegate {
   private func configureTestConnectionButton() {
     testConnectionButton.target = self
     testConnectionButton.action = #selector(testConnection)
+  }
+
+  private func configureChatPreviewButton() {
+    chatPreviewButton.target = self
+    chatPreviewButton.action = #selector(openChatPreview)
+  }
+
+  @objc private func openChatPreview() {
+    (view.window?.windowController as? SettingsWindowController)?.presentChatPreview()
   }
 
   private func updateConfigurationControls() {

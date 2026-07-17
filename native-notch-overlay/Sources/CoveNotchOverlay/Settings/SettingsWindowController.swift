@@ -4,6 +4,7 @@ import AppKit
 /// so reopening it preserves the selected section and scroll position.
 final class SettingsWindowController: NSWindowController, NSWindowDelegate {
   private var hasPresented = false
+  private var chatWindowController: ChatWindowController?
 
   init() {
     print("[Settings][Init 01] SettingsWindowController.init() started")
@@ -118,6 +119,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
       }
       self.printWindowState(window, step: "next run-loop visibility check")
     }
+  }
+
+  func presentChatPreview() {
+    let controller: ChatWindowController
+    if let existingController = chatWindowController {
+      controller = existingController
+    } else {
+      controller = ChatWindowController()
+      chatWindowController = controller
+    }
+    controller.present()
   }
 
   private func ensureWindowIsOnScreen(_ window: NSWindow) {
