@@ -237,6 +237,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   private var workspaceObserver: NSObjectProtocol?
   private var screenObserver: NSObjectProtocol?
   private var settingsWindowController: SettingsWindowController?
+  private var chatWindowController: ChatWindowController?
   private var overlayState: OverlayState = .compact
   private var isHovering = false
   private var lastLoggedNotchDescription = ""
@@ -246,9 +247,42 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ notification: Notification) {
     NSApp.setActivationPolicy(.accessory)
     SettingsStore.shared.applyPersistedAppearance()
+    configureApplicationMenu()
     createNotchPanel()
     observeActiveApplicationChanges()
     observeScreenChanges()
+  }
+
+  private func configureApplicationMenu() {
+    let mainMenu = NSMenu()
+    let appMenuItem = NSMenuItem()
+    mainMenu.addItem(appMenuItem)
+
+    let appMenu = NSMenu(title: "Cove")
+    appMenu.addItem(
+      withTitle: "Chat (Preview)",
+      action: #selector(showChatPreview),
+      keyEquivalent: ""
+    )
+    appMenu.addItem(.separator())
+    appMenu.addItem(
+      withTitle: "Quit Cove",
+      action: #selector(NSApplication.terminate(_:)),
+      keyEquivalent: "q"
+    )
+    appMenuItem.submenu = appMenu
+    NSApp.mainMenu = mainMenu
+  }
+
+  @objc private func showChatPreview() {
+    let controller: ChatWindowController
+    if let existingController = chatWindowController {
+      controller = existingController
+    } else {
+      controller = ChatWindowController()
+      chatWindowController = controller
+    }
+    controller.present()
   }
 
   func applicationWillTerminate(_ notification: Notification) {
