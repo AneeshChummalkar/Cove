@@ -12,6 +12,15 @@ enum AIProvider: String {
   case claude
   case gemini
   case local
+
+  var displayName: String {
+    switch self {
+    case .openAI: return "OpenAI"
+    case .claude: return "Claude"
+    case .gemini: return "Gemini"
+    case .local: return "Ollama"
+    }
+  }
 }
 
 enum OpenAIModel: String, CaseIterable {
